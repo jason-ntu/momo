@@ -518,7 +518,11 @@ Model building entry function
 """
 function compute_anytime_model(dataset::String, surprise_threshold::Float64, size_threshold::Float64, stop_threshold::Float64, stop_after_n_structures::Float64, sort_heuristic::String; overwrite::Bool=false, debug::Bool=false)
     dataset_core = splitdir(splitdir(dataset)[1])[end]*"/"*splitext(splitdir(dataset)[end])[1]
-    logdir, logfile = splitdir("../results/$(dataset_core)_size-$(size_threshold)_max-$(stop_after_n_structures)_sort-$(sort_heuristic).log")
+    if occursin("dsns/", dataset)
+        logdir, logfile = splitdir("../results/dsns/$(dataset_core)_size-$(size_threshold)_max-$(stop_after_n_structures)_sort-$(sort_heuristic).log")
+    else    
+        logdir, logfile = splitdir("../results/$(dataset_core)_size-$(size_threshold)_max-$(stop_after_n_structures)_sort-$(sort_heuristic).log")
+    end
     # we don't want to accidentally overwrite logs when there is a corresponding model already
     if !overwrite && isfile(logdir * "/" * logfile[1:end-3] * "json")
         println("Skipping $(logfile) because there exists a corresponding model and overwrite is false...")

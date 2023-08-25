@@ -10,6 +10,10 @@ To prepare the *arxiv-temporal* data,
 - run `python prepare_arxiv_data.py raw-data/arxiv-raw data/arxiv-temporal`
     (this will also create category files, bipartite graphs, and author projections of the bipartite graphs for all arXiv categories as of 2020-11-01).
 
+To prepare the *dsns* data:
+
+`make prepare` (remember to set the correct foder, e.g. `dsns/logstash-victim_entry.chromo-jsenhance-2021-07-19`)
+
 To prepare the *bio* data:
 
 `python prepare_bio_data.py raw-data/bio-raw/PPT-Ohmnet_tissues-combined.edgelist data/bio`

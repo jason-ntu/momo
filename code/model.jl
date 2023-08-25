@@ -97,11 +97,18 @@ save model as jldb (serialization format) or json
 """
 function save_model(M::GraphModel, directory::String; final=true, overwrite=true)
     path, file = splitdir(M.dataset)
-    last_folder = splitdir(path)[end]
+    path_parts = split(path, "/")
+    last_folder = path_parts[end]
+    if path_parts[end-1] == "dsns"
+        last_folder = "dsns/$last_folder"
+    end
+    println("path: ", path)
+    println("last_folder: ", last_folder)
     file_base, ext = splitext(file)
     size_threshold = M.parameters["size_threshold"]
     stop_after_n_structures = M.parameters["stop_after_n_structures"]
     filepath = "$(directory)/$(last_folder)/$(file_base)_size-$(size_threshold)_max-$(stop_after_n_structures)"
+    println("filepath: ", filepath)
     mkpath(splitdir(filepath)[1])
     if !final
         open(filepath*".jldb", "w") do io
